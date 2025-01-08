@@ -5,7 +5,7 @@ on:
     branches: 'main'
 
 jobs:
-  build_site:
+  build_and_deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -27,24 +27,9 @@ jobs:
           npm run build
           touch build/.nojekyll
 
-      - name: Upload Artifacts
-        uses: actions/upload-pages-artifact@v3
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          path: 'build/'
-
-  deploy:
-    needs: build_site
-    runs-on: ubuntu-latest
-
-    permissions:
-      pages: write
-      id-token: write
-
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
-    steps:
-      - name: Deploy
-        id: deployment
-        uses: actions/deploy-pages@v4 
+          branch: gh-pages
+          folder: build
+          clean: true 
