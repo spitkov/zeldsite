@@ -29,10 +29,6 @@
 	"dependencies": {
 		"@sveltejs/adapter-auto": "^3.3.1",
 		"@sveltejs/adapter-static": "^3.0.8",
-		"@tsparticles/engine": "^3.7.1",
-		"@tsparticles/slim": "^3.7.1",
-		"particles.js": "^2.0.0",
-		"tsparticles": "^3.7.1",
-		"tsparticles-slim": "^2.12.0"
+		"particles.js": "^2.0.0"
 	}
 }
