@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply text-white cursor-none select-text;
+    background: transparent;
+  }
+
+  a, button, [role="button"], [data-cursor="pointer"] {
+    @apply cursor-none;
+  }
+
+  input, textarea, [contenteditable="true"] {
+    @apply cursor-text;
+  }
+
+  [draggable="true"] {
+    @apply cursor-move;
+  }
+
+  ::selection {
+    @apply bg-white/20 text-white;
+  }
+}
+
+@layer components {
+  .cursor, .cursor-dot {
+    @apply pointer-events-none fixed z-50 mix-blend-difference;
+  }
+
+  .cursor-ring {
+    @apply relative -left-4 -top-4 h-8 w-8 rounded-full bg-white/30 blur-sm transition-all duration-200 ease-out;
+  }
+
+  .dot {
+    @apply relative -left-1 -top-1 h-2 w-2 rounded-full bg-white transition-all duration-150 ease-out;
+  }
+
+  .cursor.hover .cursor-ring {
+    @apply scale-150 opacity-70;
+  }
+
+  .cursor-dot.hover .dot {
+    @apply scale-50;
+  }
+} 
