@@ -81,13 +81,12 @@
     };
   });
 </script>
-
 <div class="flex min-h-screen items-center justify-center p-4">
   <div class="w-full max-w-md rounded-xl bg-white/10 backdrop-blur-lg p-6 shadow-2xl">
     <div class="flex flex-col items-center space-y-4">
       <!-- Profile Picture with Status Ring -->
       <div class="relative">
-        <div class={`absolute inset-0 rounded-full ${getStatusColor(status)} blur opacity-75`}></div>
+        <div class={`absolute -inset-0.5 rounded-full ${getStatusColor(status)} opacity-75`}></div>
         <div class="relative h-32 w-32 overflow-hidden rounded-full bg-gray-800/50 border-4 border-white/10">
           <img 
             src={useDefaultAvatar ? DEFAULT_AVATAR : `https://api.lanyard.rest/${DISCORD_ID}.png`}
