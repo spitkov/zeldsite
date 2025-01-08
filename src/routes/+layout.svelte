@@ -1,244 +1,230 @@
 <script lang="ts">
   import '../app.css';
   import { onMount } from 'svelte';
-  import { browser } from '$app/environment';
 
-  let container: HTMLElement;
   let cursor: HTMLDivElement;
   let cursorDot: HTMLDivElement;
   let isHovering = false;
   let isMobile = false;
 
-  // Move config inside onMount to ensure it only runs in browser
-  let pcConfig: any;
-  let mobileConfig: any;
-
-  onMount(() => {
-    if (!browser) return;
-
-    // Initialize configs
-    pcConfig = {
-      particles: {
-        number: {
-          value: 120,
-          density: {
-            enable: true,
-            value_area: 1200
-          }
-        },
-        color: {
-          value: ['#ffffff', '#2dd4bf', '#818cf8', '#c084fc', '#22d3ee']
-        },
-        shape: {
-          type: ['circle', 'triangle', 'star'],
-          stroke: {
-            width: 1,
-            color: '#ffffff',
-            opacity: 0.3
-          },
-          polygon: {
-            nb_sides: 5
-          }
-        },
-        opacity: {
-          value: 0.6,
-          random: true,
-          anim: {
-            enable: true,
-            speed: 0.8,
-            opacity_min: 0.1,
-            sync: false
-          }
-        },
-        size: {
-          value: 3,
-          random: true,
-          anim: {
-            enable: true,
-            speed: 3,
-            size_min: 0.3,
-            sync: false
-          }
-        },
-        line_linked: {
+  const pcConfig = {
+    particles: {
+      number: {
+        value: 120,
+        density: {
           enable: true,
-          distance: 150,
-          color: '#ffffff',
-          opacity: 0.2,
+          value_area: 1200
+        }
+      },
+      color: {
+        value: ['#ffffff', '#2dd4bf', '#818cf8', '#c084fc', '#22d3ee']
+      },
+      shape: {
+        type: ['circle', 'triangle', 'star'],
+        stroke: {
           width: 1,
-          triangles: {
-            enable: true,
-            opacity: 0.05,
-            color: '#818cf8'
+          color: '#ffffff',
+          opacity: 0.3
+        },
+        polygon: {
+          nb_sides: 5
+        }
+      },
+      opacity: {
+        value: 0.6,
+        random: true,
+        anim: {
+          enable: true,
+          speed: 0.8,
+          opacity_min: 0.1,
+          sync: false
+        }
+      },
+      size: {
+        value: 3,
+        random: true,
+        anim: {
+          enable: true,
+          speed: 3,
+          size_min: 0.3,
+          sync: false
+        }
+      },
+      line_linked: {
+        enable: true,
+        distance: 150,
+        color: '#ffffff',
+        opacity: 0.2,
+        width: 1,
+        triangles: {
+          enable: true,
+          opacity: 0.05,
+          color: '#818cf8'
+        }
+      },
+      move: {
+        enable: true,
+        speed: 2,
+        direction: 'none',
+        random: true,
+        straight: false,
+        out_mode: 'out',
+        bounce: false,
+        attract: {
+          enable: true,
+          rotateX: 1200,
+          rotateY: 1500
+        }
+      }
+    },
+    interactivity: {
+      detect_on: 'window',
+      events: {
+        onhover: {
+          enable: true,
+          mode: ['grab', 'bubble', 'connect']
+        },
+        onclick: {
+          enable: true,
+          mode: 'push'
+        },
+        resize: true
+      },
+      modes: {
+        grab: {
+          distance: 200,
+          line_linked: {
+            opacity: 0.8
           }
         },
-        move: {
+        bubble: {
+          distance: 250,
+          size: 6,
+          duration: 2,
+          opacity: 0.8,
+          speed: 3
+        },
+        connect: {
+          distance: 100,
+          radius: 150,
+          links: {
+            opacity: 0.3
+          }
+        },
+        push: {
+          particles_nb: 4
+        },
+        remove: {
+          particles_nb: 2
+        }
+      }
+    },
+    retina_detect: true,
+    background: {
+      color: 'transparent'
+    }
+  };
+
+  const mobileConfig = {
+    ...pcConfig,
+    particles: {
+      ...pcConfig.particles,
+      number: {
+        value: 50,
+        density: {
+          enable: true,
+          value_area: 800
+        }
+      },
+      size: {
+        value: 3,
+        random: true,
+        anim: {
           enable: true,
           speed: 2,
-          direction: 'none',
-          random: true,
-          straight: false,
-          out_mode: 'out',
-          bounce: false,
-          attract: {
-            enable: true,
-            rotateX: 1200,
-            rotateY: 1500
-          }
+          size_min: 0.3,
+          sync: false
         }
       },
-      interactivity: {
-        detect_on: 'window',
-        events: {
-          onhover: {
-            enable: true,
-            mode: ['grab', 'bubble', 'connect']
-          },
-          onclick: {
-            enable: true,
-            mode: 'push'
-          },
-          resize: true
+      move: {
+        speed: 1.5,
+        attract: {
+          enable: true,
+          rotateX: 600,
+          rotateY: 800
+        }
+      }
+    },
+    interactivity: {
+      ...pcConfig.interactivity,
+      detect_on: 'canvas',
+      events: {
+        onhover: {
+          enable: true,
+          mode: ['bubble', 'connect']
         },
-        modes: {
-          grab: {
-            distance: 200,
-            line_linked: {
-              opacity: 0.8
-            }
-          },
-          bubble: {
-            distance: 250,
-            size: 6,
-            duration: 2,
-            opacity: 0.8,
-            speed: 3
-          },
-          connect: {
-            distance: 100,
-            radius: 150,
-            links: {
-              opacity: 0.3
-            }
-          },
-          push: {
-            particles_nb: 4
-          },
-          remove: {
-            particles_nb: 2
-          }
+        onclick: {
+          enable: true,
+          mode: 'push'
         }
       },
-      retina_detect: true,
-      background: {
-        color: 'transparent'
-      }
-    };
-
-    mobileConfig = {
-      ...pcConfig,
-      particles: {
-        ...pcConfig.particles,
-        number: {
-          value: 50,
-          density: {
-            enable: true,
-            value_area: 800
-          }
+      modes: {
+        ...pcConfig.interactivity.modes,
+        bubble: {
+          distance: 150,
+          size: 4,
+          duration: 2,
+          opacity: 0.8,
+          speed: 3
         },
-        size: {
-          value: 3,
-          random: true,
-          anim: {
-            enable: true,
-            speed: 2,
-            size_min: 0.3,
-            sync: false
-          }
-        },
-        move: {
-          speed: 1.5,
-          attract: {
-            enable: true,
-            rotateX: 600,
-            rotateY: 800
-          }
-        }
-      },
-      interactivity: {
-        ...pcConfig.interactivity,
-        detect_on: 'canvas',
-        events: {
-          onhover: {
-            enable: true,
-            mode: ['bubble', 'connect']
-          },
-          onclick: {
-            enable: true,
-            mode: 'push'
-          }
-        },
-        modes: {
-          ...pcConfig.interactivity.modes,
-          bubble: {
-            distance: 150,
-            size: 4,
-            duration: 2,
-            opacity: 0.8,
-            speed: 3
-          },
-          connect: {
-            distance: 80,
-            radius: 120,
-            links: {
-              opacity: 0.3
-            }
+        connect: {
+          distance: 80,
+          radius: 120,
+          links: {
+            opacity: 0.3
           }
         }
       }
-    };
+    }
+  };
 
-    // Initialize particles
-    const loadParticles = async () => {
-      try {
-        await import('particles.js');
-        isMobile = window.innerWidth < 768;
-        const config = isMobile ? mobileConfig : pcConfig;
-        (window as any).particlesJS('particles-js', config);
-      } catch (error) {
-        console.error('Failed to load particles:', error);
-      }
-    };
+  function handleMouseMove(event: MouseEvent) {
+    if (!isMobile && cursor && cursorDot) {
+      const { clientX, clientY } = event;
+      const scale = isHovering ? 1.5 : 1;
+      const dotScale = isHovering ? 0.5 : 1;
+      cursor.style.transform = `translate(${clientX}px, ${clientY}px) scale(${scale})`;
+      cursorDot.style.transform = `translate(${clientX}px, ${clientY}px) scale(${dotScale})`;
+    }
+  }
 
-    // Mouse handlers
-    const handleMouseMove = (event: MouseEvent) => {
-      if (!isMobile && cursor && cursorDot) {
-        const { clientX, clientY } = event;
-        const scale = isHovering ? 1.5 : 1;
-        const dotScale = isHovering ? 0.5 : 1;
-        cursor.style.transform = `translate(${clientX}px, ${clientY}px) scale(${scale})`;
-        cursorDot.style.transform = `translate(${clientX}px, ${clientY}px) scale(${dotScale})`;
-      }
-    };
+  function handleMouseEnter(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    if (target.matches('a, button, [role="button"], input, textarea, select, [data-cursor="pointer"]')) {
+      isHovering = true;
+      cursor?.classList.add('hover');
+      cursorDot?.classList.add('hover');
+    }
+  }
 
-    const handleMouseEnter = (event: MouseEvent) => {
-      const target = event.target as HTMLElement;
-      if (target.matches('a, button, [role="button"], input, textarea, select, [data-cursor="pointer"]')) {
-        isHovering = true;
-        cursor?.classList.add('hover');
-        cursorDot?.classList.add('hover');
-      }
-    };
+  function handleMouseLeave() {
+    isHovering = false;
+    cursor?.classList.remove('hover');
+    cursorDot?.classList.remove('hover');
+  }
 
-    const handleMouseLeave = () => {
-      isHovering = false;
-      cursor?.classList.remove('hover');
-      cursorDot?.classList.remove('hover');
+  onMount(async () => {
+    // Load particles.js script
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js';
+    script.onload = () => {
+      isMobile = window.innerWidth < 768;
+      const config = isMobile ? mobileConfig : pcConfig;
+      (window as any).particlesJS('particles-js', config);
     };
+    document.body.appendChild(script);
 
-    // Initialize everything
-    loadParticles();
-    
+    // Mouse events
     if (!isMobile) {
       window.addEventListener('mousemove', handleMouseMove);
       document.addEventListener('mouseover', handleMouseEnter);
@@ -247,12 +233,12 @@
 
     const handleResize = () => {
       isMobile = window.innerWidth < 768;
-      loadParticles();
+      const config = isMobile ? mobileConfig : pcConfig;
+      (window as any).particlesJS('particles-js', config);
     };
 
     window.addEventListener('resize', handleResize);
 
-    // Cleanup
     return () => {
       window.removeEventListener('resize', handleResize);
       if (!isMobile) {
@@ -260,13 +246,14 @@
         document.removeEventListener('mouseover', handleMouseEnter);
         document.removeEventListener('mouseout', handleMouseLeave);
       }
+      document.body.removeChild(script);
     };
   });
 </script>
 
 <div class="min-h-screen relative overflow-hidden bg-gradient-to-br from-[#0f172a] to-[#1e293b]">
   <div id="particles-js" class="absolute inset-0 z-0 touch-none"></div>
-  {#if browser && !isMobile}
+  {#if !isMobile}
     <div bind:this={cursor} class="cursor">
       <div class="cursor-ring"></div>
     </div>
